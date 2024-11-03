@@ -24,13 +24,13 @@ a {
 }
 
 .nav-masthead .nav-link {
-  color: rgba(255, 255, 255, 0.5);
+  color: inherit;
   border-bottom: 0.25rem solid transparent;
 }
 
 .nav-masthead .nav-link:hover,
 .nav-masthead .nav-link:focus {
-  border-bottom-color: rgba(255, 255, 255, 0.25);
+  border-bottom-color: inherit;
 }
 
 .nav-masthead .nav-link + .nav-link {
