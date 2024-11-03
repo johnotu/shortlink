@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.min.css";
 import "./globals.css";
 import PageHeader from "./components/page-header";
+import { ToastContainer } from "react-toastify";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,6 +35,7 @@ export default function RootLayout({
         <div className="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
           <PageHeader />
           {children}
+          <ToastContainer />
           <footer className="mt-auto text-black-50">
             <p>
               Powered by{" "}
