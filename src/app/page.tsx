@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { UrlEntry } from "./types";
+import { copyUrl } from "./utils";
 
 export default function Home() {
   const [originalUrl, setOriginalurl] = useState("");
@@ -49,11 +50,6 @@ export default function Home() {
         "Invalid URL. Please provide a valid URL with http or https."
       );
     }
-  };
-
-  const copyUrl = ({ url }: { url: string }) => {
-    navigator.clipboard.writeText(url);
-    toast.success("URL copied to clipboard.", { autoClose: 1000 });
   };
 
   return (

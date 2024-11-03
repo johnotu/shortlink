@@ -1,7 +1,36 @@
+"use client";
+
 import Link from "next/link";
-import LinkCard from "../components/link-card";
+import LinkCard from "./link-card";
+import { useEffect, useState } from "react";
+import { UrlEntry } from "../types";
+import EmptyLinksCard from "./empty-links-card";
 
 export default function Links() {
+  const [urlEntries, setUrlEntries] = useState<UrlEntry[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredUrlEntries, setFilteredUrlEntries] = useState<UrlEntry[]>([]);
+
+  useEffect(() => {
+    const savedUrlEntries = localStorage.getItem("urlEntries");
+    if (savedUrlEntries) {
+      setUrlEntries(JSON.parse(savedUrlEntries));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (searchTerm.trim().length < 3) {
+      setFilteredUrlEntries([]);
+      return;
+    }
+    const regex = new RegExp(searchTerm, "i");
+    const filtered = urlEntries.filter((item) => regex.test(item.originalUrl));
+    setFilteredUrlEntries(filtered);
+  }, [searchTerm, urlEntries]);
+
+  const displayEntries =
+    searchTerm.trim().length < 3 ? urlEntries : filteredUrlEntries;
+
   return (
     <main className="">
       <div className="d-flex align-items-center justify-content-between mb-3">
@@ -26,13 +55,27 @@ export default function Links() {
       </div>
       <input
         type="text"
-        className="form-control mb-3"
-        placeholder="Search links"
+        className="form-control"
+        placeholder="Search by original URL (min 3 characters)"
+        onChange={(event) => {
+          setSearchTerm(event.target.value);
+        }}
       />
-      <LinkCard />
-      <LinkCard />
-      <LinkCard />
-      <LinkCard />
+      {searchTerm.trim().length > 0 && searchTerm.trim().length < 3 && (
+        <small className="text-muted">
+          Please enter at least 3 characters to search
+        </small>
+      )}
+
+      {urlEntries.length === 0 ? (
+        <EmptyLinksCard />
+      ) : displayEntries.length === 0 && searchTerm.trim().length >= 3 ? (
+        <EmptyLinksCard searchTerm={searchTerm} />
+      ) : (
+        displayEntries.map((entry) => (
+          <LinkCard key={entry.id} urlEntry={entry} />
+        ))
+      )}
     </main>
   );
 }

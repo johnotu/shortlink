@@ -1,8 +1,11 @@
 import dayjs from "dayjs";
+import { UrlEntry } from "../types";
+import { copyUrl } from "../utils";
 
-export default function LinkCard() {
+export default function LinkCard({ urlEntry }: { urlEntry: UrlEntry }) {
+  const { originalUrl, shortUrl, created } = urlEntry;
   return (
-    <div className="card mx-auto mb-3">
+    <div className="card mx-auto mb-3 mt-3">
       <div className="card-body shadow-sm bg-none d-flex flex-column">
         <div className="d-flex column-gap-3 mb-3">
           <div className="col-2 d-flex align-items-center justify-content-center">
@@ -22,11 +25,14 @@ export default function LinkCard() {
             </svg>
           </div>
           <div className="d-flex flex-column text-start col-8">
-            <h5 className="card-title">https://short/link</h5>
-            <p className="card-text">https://long/url</p>
+            <h5 className="card-title">{shortUrl}</h5>
+            <p className="card-text">{originalUrl}</p>
           </div>
           <div className="col">
-            <button className="btn btn-sm btn-outline-secondary d-flex column-gap-1">
+            <button
+              className="btn btn-sm btn-outline-secondary d-flex column-gap-1"
+              onClick={() => copyUrl({ url: shortUrl })}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -64,7 +70,7 @@ export default function LinkCard() {
             <line x1="3" x2="21" y1="10" y2="10" />
           </svg>
           <small className="mb-0 small">
-            {dayjs(new Date()).format("MMM DD, YYYY")}
+            {dayjs(created).format("MMM DD, YYYY")}
           </small>
         </div>
       </div>
