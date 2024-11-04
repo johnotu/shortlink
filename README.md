@@ -2,6 +2,8 @@
 
 Short links, long reach!
 
+[![Playwright Tests](https://github.com/johnotu/shortlink/actions/workflows/playwright.yml/badge.svg)](https://github.com/johnotu/shortlink/actions/workflows/playwright.yml)
+
 ## Hosted app
 
 The ShortLink app is hosted [here](https://ibio-link.netlify.app/)
